@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.importtao.seckillbackend.dao.SeckillRepertoryMapper" >
+  <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.SeckillRepertory" >
+    <id column="seckill_id" property="seckillId" jdbcType="BIGINT" />
+    <result column="seckill_name" property="seckillName" jdbcType="VARCHAR" />
+    <result column="seckill_number" property="seckillNumber" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    seckill_id, seckill_name, seckill_number, start_time, end_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from secKill_repertory
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from secKill_repertory
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.importtao.seckillbackend.model.SeckillRepertory" >
+    insert into secKill_repertory (seckill_id, seckill_name, seckill_number, 
+      start_time, end_time, create_time
+      )
+    values (#{seckillId,jdbcType=BIGINT}, #{seckillName,jdbcType=VARCHAR}, #{seckillNumber,jdbcType=INTEGER}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.importtao.seckillbackend.model.SeckillRepertory" >
+    insert into secKill_repertory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seckillId != null" >
+        seckill_id,
+      </if>
+      <if test="seckillName != null" >
+        seckill_name,
+      </if>
+      <if test="seckillNumber != null" >
+        seckill_number,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seckillId != null" >
+        #{seckillId,jdbcType=BIGINT},
+      </if>
+      <if test="seckillName != null" >
+        #{seckillName,jdbcType=VARCHAR},
+      </if>
+      <if test="seckillNumber != null" >
+        #{seckillNumber,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.importtao.seckillbackend.model.SeckillRepertory" >
+    update secKill_repertory
+    <set >
+      <if test="seckillName != null" >
+        seckill_name = #{seckillName,jdbcType=VARCHAR},
+      </if>
+      <if test="seckillNumber != null" >
+        seckill_number = #{seckillNumber,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.importtao.seckillbackend.model.SeckillRepertory" >
+    update secKill_repertory
+    set seckill_name = #{seckillName,jdbcType=VARCHAR},
+      seckill_number = #{seckillNumber,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+  </update>
+</mapper>

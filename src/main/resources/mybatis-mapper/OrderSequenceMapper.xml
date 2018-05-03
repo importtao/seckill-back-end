@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.importtao.seckillbackend.dao.OrderSequenceMapper" >
+  <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.OrderSequence" >
+    <id column="today_date" property="todayDate" jdbcType="DATE" />
+    <result column="max_sequence" property="maxSequence" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    today_date, max_sequence, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Date" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_sequence
+    where today_date = #{todayDate,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Date" >
+    delete from order_sequence
+    where today_date = #{todayDate,jdbcType=DATE}
+  </delete>
+  <insert id="insert" parameterType="me.importtao.seckillbackend.model.OrderSequence" >
+    insert into order_sequence (today_date, max_sequence, update_time
+      )
+    values (#{todayDate,jdbcType=DATE}, #{maxSequence,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.importtao.seckillbackend.model.OrderSequence" >
+    insert into order_sequence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="todayDate != null" >
+        today_date,
+      </if>
+      <if test="maxSequence != null" >
+        max_sequence,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="todayDate != null" >
+        #{todayDate,jdbcType=DATE},
+      </if>
+      <if test="maxSequence != null" >
+        #{maxSequence,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.importtao.seckillbackend.model.OrderSequence" >
+    update order_sequence
+    <set >
+      <if test="maxSequence != null" >
+        max_sequence = #{maxSequence,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where today_date = #{todayDate,jdbcType=DATE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.importtao.seckillbackend.model.OrderSequence" >
+    update order_sequence
+    set max_sequence = #{maxSequence,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where today_date = #{todayDate,jdbcType=DATE}
+  </update>
+</mapper>

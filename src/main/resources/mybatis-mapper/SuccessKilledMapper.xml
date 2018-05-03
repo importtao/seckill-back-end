@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.importtao.seckillbackend.dao.SuccessKilledMapper" >
+  <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.SuccessKilled" >
+    <id column="seckill_id" property="seckillId" jdbcType="BIGINT" />
+    <id column="user_phone" property="userPhone" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    seckill_id, user_phone, status, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="me.importtao.seckillbackend.model.SuccessKilledKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from success_killed
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+      and user_phone = #{userPhone,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="me.importtao.seckillbackend.model.SuccessKilledKey" >
+    delete from success_killed
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+      and user_phone = #{userPhone,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.importtao.seckillbackend.model.SuccessKilled" >
+    insert into success_killed (seckill_id, user_phone, status, 
+      create_time)
+    values (#{seckillId,jdbcType=BIGINT}, #{userPhone,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="me.importtao.seckillbackend.model.SuccessKilled" >
+    insert into success_killed
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seckillId != null" >
+        seckill_id,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seckillId != null" >
+        #{seckillId,jdbcType=BIGINT},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.importtao.seckillbackend.model.SuccessKilled" >
+    update success_killed
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+      and user_phone = #{userPhone,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.importtao.seckillbackend.model.SuccessKilled" >
+    update success_killed
+    set status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where seckill_id = #{seckillId,jdbcType=BIGINT}
+      and user_phone = #{userPhone,jdbcType=BIGINT}
+  </update>
+</mapper>
