@@ -1,5 +1,6 @@
 package me.importtao.seckillbackend.controller;
 
+import me.importtao.seckillbackend.util.GeneratorTimeRandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 
 /**
@@ -25,6 +27,7 @@ import java.nio.file.Paths;
  * @version V1.0
  */
 @RestController
+@CrossOrigin
 public class FileController {
     @Value("${file.imgPath}")
     private String imgPath;
@@ -39,16 +42,22 @@ public class FileController {
     }
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
     @PostMapping("/file")
-    public String uploadFile(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
+    public HashMap uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        HashMap map = new HashMap(6);
         if (file.isEmpty()) {
-            return "文件为空";
+            map.put("status",1);
+            map.put("msg","文件为空");
+            return map;
         }
         // 获取文件名
         String fileName = file.getOriginalFilename();
         logger.info("上传的文件名为：" + fileName);
         // 获取文件的后缀名
+        //文件名转换为系统文件名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         logger.info("上传的后缀名为：" + suffixName);
+        fileName = GeneratorTimeRandomString.getTimeRandomString()+suffixName;
+        logger.info("修改文件名为："+fileName);
         // 文件上传后的路径
         // 解决中文问题，liunx下中文路径，图片显示问题
         // fileName = UUID.randomUUID() + suffixName;
@@ -59,13 +68,18 @@ public class FileController {
         }
         try {
             file.transferTo(dest);
-            return "上传成功";
+            map.put("status",0);
+            map.put("msg","上传成功");
+            map.put("file",fileName);
+            return map;
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "上传失败";
+        map.put("status",1);
+        map.put("msg","上传失败");
+        return map;
     }
 
     @GetMapping("/file/{filename:.+}")
@@ -101,7 +115,7 @@ public class FileController {
         return "文件不存在";
     }
 
-    //显示图片的方法关键 匹配路径像 localhost:8080/b7c76eb3-5a67-4d41-ae5c-1642af3f8746.png
+    /*显示图片的方法关键 匹配路径像 localhost:8080/b7c76eb3-5a67-4d41-ae5c-1642af3f8746.png*/
     @RequestMapping(method = RequestMethod.GET, value = "/img/{filename:.+}")
     @ResponseBody
     public ResponseEntity<?> getFile(@PathVariable String filename) {
@@ -113,9 +127,12 @@ public class FileController {
         }
     }
     @PostMapping("/img")
-    public String uploadImg(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
+    public HashMap uploadImg(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
+        HashMap map = new HashMap(6);
         if (file.isEmpty()) {
-            return "文件为空";
+            map.put("status",1);
+            map.put("msg","文件为空");
+            return map;
         }
         // 获取文件名
         String fileName = file.getOriginalFilename();
@@ -123,9 +140,8 @@ public class FileController {
         // 获取文件的后缀名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         logger.info("上传的后缀名为：" + suffixName);
-        // 文件上传后的路径
-        // 解决中文问题，liunx下中文路径，图片显示问题
-        // fileName = UUID.randomUUID() + suffixName;
+        fileName = GeneratorTimeRandomString.getTimeRandomString()+suffixName;
+        logger.info("修改文件名为："+fileName);
         File dest = new File(imgPath + fileName);
         // 检测是否存在目录
         if (!dest.getParentFile().exists()) {
@@ -133,12 +149,17 @@ public class FileController {
         }
         try {
             file.transferTo(dest);
-            return "图片上传成功";
+            map.put("status",0);
+            map.put("msg","图片上传成功");
+            map.put("file",fileName);
+            return map;
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "图片上传失败";
+        map.put("status",1);
+        map.put("msg","上传失败");
+        return map;
     }
 }

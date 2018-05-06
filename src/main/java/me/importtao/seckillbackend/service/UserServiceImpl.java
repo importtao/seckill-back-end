@@ -6,6 +6,7 @@ import me.importtao.seckillbackend.dao.UserMapper;
 import me.importtao.seckillbackend.model.User;
 import me.importtao.seckillbackend.model.UserInfo;
 import me.importtao.seckillbackend.util.Encode;
+import me.importtao.seckillbackend.util.GeneratorTimeRandomString;
 import me.importtao.seckillbackend.util.GeneratorUserId;
 import me.importtao.seckillbackend.util.Token;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(rollbackFor=Exception.class)
     public HashMap register(HttpServletRequest request){
-        HashMap<String,String> map = new HashMap<String,String>(16);
+        HashMap<String,Object> map = new HashMap<String,Object>(16);
         String phoneString = request.getParameter("phone");
         long phone = Long.valueOf(phoneString);
         String password = request.getParameter("password");
@@ -98,6 +99,7 @@ public class UserServiceImpl implements UserService{
         //用户状态默认为0
         byte status = 0;
         user.setPassword(password);
+        user.setUserName(GeneratorTimeRandomString.getTimeRandomString());
         user.setStatus(status);
         user.setUserId(userId);
         user.setUserName(userId);
@@ -133,7 +135,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public HashMap login(HttpServletRequest request) {
-        HashMap<String,String> map = passwordCheck(request);
+        HashMap<String,Object> map = passwordCheck(request);
         String parameter = request.getParameter("parameter");
         //接口调用返回标识
         String status = "status";
@@ -142,7 +144,7 @@ public class UserServiceImpl implements UserService{
         if(success.equals(map.get(status))){
             User user = userMapper.selectByParameter(parameter);
             String userString = JSON.toJSONString(user);
-            map.put("user",userString);
+            map.put("user",user);
             UserInfo userInfo = userInfoMapper.selectByUserID(user.getUserId());
             String userInfoString = JSON.toJSONString(userInfo);
             ValueOperations valueOperations = redisTemplate.opsForValue();
@@ -157,7 +159,7 @@ public class UserServiceImpl implements UserService{
                 logger.info("生成token失败，userID"+user.getUserId());
             }
             valueOperations.set(key,data,Long.valueOf(tokenExpire), TimeUnit.MILLISECONDS);
-            map.put("userInfo",userInfoString);
+            map.put("userInfo",userInfo);
             map.put("status","0");
             map.put("msg","登陆成功");
             return map;

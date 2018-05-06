@@ -28,7 +28,7 @@ public class UserServiceTest {
     private UserService userService;
     @Test
     public void register() throws Exception {
-        for(int i=0;i<99;i++){
+        for(int i=0;i<1;i++){
             char[] ch = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
             Random r = new Random();
             int len = ch.length, index;
@@ -39,7 +39,8 @@ public class UserServiceTest {
             }
             MockHttpServletRequest request = new MockHttpServletRequest();
             request.setParameter("phone","18342962398");
-            request.setParameter("password",sb.toString());
+            //request.setParameter("password",sb.toString());
+            request.setParameter("password","test");
             request.setParameter("organization","0001");
             Map map = userService.register(request);
             System.out.println(JSON.toJSONString(map));
@@ -76,11 +77,15 @@ public class UserServiceTest {
 
     @Test
     public void login(){
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setParameter("parameter","18342962398");
-        request.setParameter("password","test");
+        /*MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setCharacterEncoding("utf-8");
+        *//*request.setParameter("parameter","");*//*
+        request.setParameter("password","");
+        System.out.println(request.getParameter("password")+"--------");
+        System.out.println(request.getParameter("passwords")+"--------");
         Map map = userService.login(request);
-        System.out.println(JSON.toJSONString(map));
+        System.out.println(JSON.toJSONString(map));*/
+
     }
 
 }
