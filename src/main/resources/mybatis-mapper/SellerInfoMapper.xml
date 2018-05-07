@@ -103,4 +103,12 @@
       version = #{version,jdbcType=INTEGER}
     where seller_id = #{sellerId,jdbcType=VARCHAR}
   </update>
+
+  <!--登录 通过sellerID获取用户信息-->
+  <select id="selectBySellerID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from seller_info
+    where seller_id = #{sellerId,jdbcType=VARCHAR}
+  </select>
 </mapper>

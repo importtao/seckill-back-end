@@ -48,10 +48,10 @@ public class UserController {
         return map;
     }
     @PostMapping("/user")
-    public Object register(HttpServletRequest request, @RequestParam(value = "id",required = false,defaultValue = "11")Integer id){
+    public Object register(HttpServletRequest request){
         HashMap map = new HashMap<>(16);
         String password = request.getParameter("password");
-        String phone = request.getParameter("phone");
+        String phone = request.getParameter("phone");logger.info("-----------"+password+"-------"+phone);
         if(password == null||password.equals("")){
             map.put("status","1");
             map.put("msg","密码为空");

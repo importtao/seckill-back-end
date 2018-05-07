@@ -13,6 +13,9 @@
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="version" property="version" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="resultCount" type="java.lang.Integer" >
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     seller_id, logo, account, password, name, detail, phone, status, createtime, version
   </sql>
@@ -149,4 +152,42 @@
       version = #{version,jdbcType=INTEGER}
     where seller_id = #{sellerId,jdbcType=VARCHAR}
   </update>
+
+  <!--密码校验-->
+  <select id="passwordCheck"  resultMap="resultCount" parameterType="java.lang.String" >
+    select
+    count(*) AS count
+    from seller
+    where 1=1
+    AND (phone = #{parameter,jdbcType=VARCHAR} OR account = #{parameter,jdbcType=VARCHAR} OR seller_id = #{parameter,jdbcType=VARCHAR})
+    AND password = #{password,jdbcType=VARCHAR}
+
+  </select>
+
+  <!--电话校验-->
+  <select id="phoneCheck"  resultMap="resultCount" parameterType="java.lang.String" >
+    select
+    count(*) AS count
+    from seller
+    where 1=1
+    AND phone = #{parameter,jdbcType=VARCHAR}
+
+  </select>
+  <!--用户名校验-->
+  <select id="userNameCheck"  resultMap="resultCount" parameterType="java.lang.String" >
+    select
+    count(*) AS count
+    from seller
+    where 1=1
+    AND account = #{parameter,jdbcType=VARCHAR}
+
+  </select>
+
+  <!--登录 sellerId/用户名、手机号 获取用户信息-->
+  <select id="selectByParameter" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from seller
+    where phone = #{parameter,jdbcType=BIGINT} OR account = #{parameter,jdbcType=VARCHAR} OR seller_id = #{parameter,jdbcType=VARCHAR} limit 0,1
+  </select>
 </mapper>

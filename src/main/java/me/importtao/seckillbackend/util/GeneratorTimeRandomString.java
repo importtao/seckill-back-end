@@ -19,7 +19,7 @@ public class GeneratorTimeRandomString {
         Random rand = new Random();
         StringBuffer result = new StringBuffer();
         result.append(time);
-        for (int j = 0; j < 12; j++)
+        for (int j = 0; j < 6; j++)
         {
             result.append(arry[rand.nextInt(arry.length-1)]);
         }

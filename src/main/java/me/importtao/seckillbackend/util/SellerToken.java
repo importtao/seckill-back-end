@@ -12,30 +12,29 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 /**
- * Package me.importtao.usersystem.util
- * Class GeneratorToken
- * Description: tocken¹¤¾ßÀà
+ * Package me.importtao.seckillbackend.util
+ * Class SellerToken
+ * Description: TODO
  *
  * @author importtao
- * date 2018/3/11 22:34
+ * date 2018/5/7 13:25
  * @version V1.0
  */
 @Transactional(rollbackFor = Exception.class)
 @Service
 @Scope("singleton")
-public class Token {
+public class SellerToken {
     @Autowired
-    private RedisTemplate redisTemplate;
-    /**
-     * description Í¨¹ıuserIDÉú³Étoken
+    private RedisTemplate redisTemplate;/**
+     * description é€šè¿‡seller userIDç”Ÿæˆtoken
      * @author importtao
      * @date 2018/3/12 16:00
-     * @param userId  Èë²Î
+     * @param sellerId  å…¥å‚
      * @return   token
      */
-    public synchronized String generatorToken(String userId) throws NoSuchAlgorithmException{
+    public synchronized String generatorSellerToken(String sellerId) throws NoSuchAlgorithmException {
 
-        String token = System.currentTimeMillis()+userId;
+        String token = System.currentTimeMillis()+sellerId+"s";
         try {
             token = Encode.encrypt(token,"BASE64");
         } catch (NoSuchAlgorithmException e) {
@@ -46,36 +45,37 @@ public class Token {
     }
 
     /**
-     * description ÑéÖ¤tokenÓĞĞ§ĞÔ
+     * description éªŒè¯tokenæœ‰æ•ˆæ€§
      * @author importtao
      * @date 2018/3/12 16:20
      * @param token token
-     * @return   boolean tokenÓĞĞ§ĞÔ
+     * @return   boolean tokenæœ‰æ•ˆæ€§
      */
-    public boolean tokenValidate(String token)throws IOException{
+    public boolean tokenValidate(String token)throws IOException {
         return redisTemplate.hasKey(token);
     }
 
     /**
-     * description É¾³ıtoken
+     * description åˆ é™¤token
      * @author importtao
      * @date 2018/3/12 16:20
      * @param token token
-     * @return   boolean tokenÓĞĞ§ĞÔ
+     * @return   boolean tokenæœ‰æ•ˆæ€§
      */
     public void tokenTimeOut(String token)throws IOException{
         redisTemplate.delete(token);
     }
 
     /**
-     * description Í¨¹ıtoken»ñÈ¡ÓÃ»§Êı¾İ
+     * description é€šè¿‡tokenè·å–ç”¨æˆ·æ•°æ®
      * @author importtao
      * @date 2018/3/12 16:26
      * @param token token
-     * @return   Object ÓÃ»§Êı¾İ
+     * @return   Object ç”¨æˆ·æ•°æ®
      */
-    public HashMap getUserByToken(String token)throws IOException{
+    public HashMap getSellerByToken(String token)throws IOException{
         ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
         return (HashMap) valueOperations.get(token);
     }
+
 }
