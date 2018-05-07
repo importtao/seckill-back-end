@@ -52,14 +52,7 @@ public class Token {
      * @return   boolean token有效性
      */
     public boolean tokenValidate(String token)throws IOException{
-        byte[] bytes;
-        try {
-            bytes = Encode.decipheringByBase64(token);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
-        return redisTemplate.hasKey(new String(bytes));
+        return redisTemplate.hasKey(token);
     }
 
     /**
@@ -70,16 +63,8 @@ public class Token {
      * @return   Object 用户数据
      */
     public Object getUserByToken(String token)throws IOException{
-        byte[] bytes;
-        try {
-            bytes = Encode.decipheringByBase64(token);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
-        String key = new String(bytes);
         ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
-        return valueOperations.get(key);
+        return valueOperations.get(token);
     }
 
     public static void main(String[] args) {

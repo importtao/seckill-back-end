@@ -1,6 +1,7 @@
 package me.importtao.seckillbackend.service;
 
 import com.alibaba.fastjson.JSON;
+import me.importtao.seckillbackend.util.Token;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
@@ -26,6 +29,8 @@ import java.util.Random;
 public class UserServiceTest {
     @Autowired
     private UserService userService;
+    @Resource
+    Token token;
     @Test
     public void register() throws Exception {
         for(int i=0;i<1;i++){
@@ -76,7 +81,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void login(){
+    public void login() throws IOException {
         /*MockHttpServletRequest request = new MockHttpServletRequest();
         request.setCharacterEncoding("utf-8");
         *//*request.setParameter("parameter","");*//*
@@ -85,6 +90,8 @@ public class UserServiceTest {
         System.out.println(request.getParameter("passwords")+"--------");
         Map map = userService.login(request);
         System.out.println(JSON.toJSONString(map));*/
+        System.out.println(("通过token获取的数据为："+JSON.toJSONString(token.tokenValidate("MTUyNTU5NTM3NTIzMzIwMTgwNTAzMDAwMDAwMDAwMw=="))));
+        System.out.println(("通过token获取的数据为："+JSON.toJSONString(token.getUserByToken("MTUyNTU5NTM3NTIzMzIwMTgwNTAzMDAwMDAwMDAwMw=="))));
 
     }
 

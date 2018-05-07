@@ -108,8 +108,6 @@ public class UserServiceImpl implements UserService{
         userInfo.setUserId(userId);
         userInfo.setUserImg("img.jpg");
         userInfoMapper.insert(userInfo);
-        map.put("status","0");
-        map.put("msg","注册成功");
         ValueOperations valueOperations = redisTemplate.opsForValue();
         HashMap<String,Object> data = new HashMap<>(16);
         data.put("user",user);
@@ -117,11 +115,17 @@ public class UserServiceImpl implements UserService{
         String key = "";
         try {
             key = token.generatorToken(user.getUserId());
+            valueOperations.set(key,data,Long.valueOf(tokenExpire), TimeUnit.MILLISECONDS);
+            map.put("status","0");
+            map.put("msg","注册成功");
+            map.put("token",key);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            map.put("status","1");
+            map.put("msg","注册失败");
             logger.info("生成token失败，userID"+user.getUserId());
+            return map;
         }
-        valueOperations.set(key,data,Long.valueOf(tokenExpire), TimeUnit.MILLISECONDS);
         return map;
     }
 
@@ -143,8 +147,6 @@ public class UserServiceImpl implements UserService{
         String success = "0";
         if(success.equals(map.get(status))){
             User user = userMapper.selectByParameter(parameter);
-            String userString = JSON.toJSONString(user);
-            map.put("user",user);
             UserInfo userInfo = userInfoMapper.selectByUserID(user.getUserId());
             String userInfoString = JSON.toJSONString(userInfo);
             ValueOperations valueOperations = redisTemplate.opsForValue();
@@ -154,14 +156,14 @@ public class UserServiceImpl implements UserService{
             String key = "";
             try {
                 key = token.generatorToken(user.getUserId());
+                valueOperations.set(key,data,Long.valueOf(tokenExpire), TimeUnit.MILLISECONDS);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
                 logger.info("生成token失败，userID"+user.getUserId());
             }
-            valueOperations.set(key,data,Long.valueOf(tokenExpire), TimeUnit.MILLISECONDS);
-            map.put("userInfo",userInfo);
             map.put("status","0");
             map.put("msg","登陆成功");
+            map.put("token",key);
             return map;
         }else{
             map.put("status","1");
@@ -211,7 +213,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public HashMap changePassword(HttpServletRequest request){
-        HashMap<String,String> map = new HashMap<String,String>(16);
+        HashMap<String,Object> map = new HashMap<String,Object>(16);
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
         String rePassword = request.getParameter("rePassword");
