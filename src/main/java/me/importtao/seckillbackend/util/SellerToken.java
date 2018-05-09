@@ -6,8 +6,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
@@ -51,7 +49,7 @@ public class SellerToken {
      * @param token token
      * @return   boolean token有效性
      */
-    public boolean tokenValidate(String token)throws IOException {
+    public boolean tokenValidate(String token){
         return redisTemplate.hasKey(token);
     }
 
@@ -62,7 +60,7 @@ public class SellerToken {
      * @param token token
      * @return   boolean token有效性
      */
-    public void tokenTimeOut(String token)throws IOException{
+    public void tokenTimeOut(String token){
         redisTemplate.delete(token);
     }
 
@@ -73,7 +71,7 @@ public class SellerToken {
      * @param token token
      * @return   Object 用户数据
      */
-    public HashMap getSellerByToken(String token)throws IOException{
+    public HashMap getSellerByToken(String token){
         ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
         return (HashMap) valueOperations.get(token);
     }

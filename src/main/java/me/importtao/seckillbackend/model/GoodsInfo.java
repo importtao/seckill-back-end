@@ -1,13 +1,15 @@
 package me.importtao.seckillbackend.model;
 
-import java.io.Serializable;
+import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+@Component
 public class GoodsInfo implements Serializable {
     private String goodsId;
 
     private String image;
 
-    private Integer price;
+    private Double price;
 
     private Integer version;
 
@@ -29,11 +31,11 @@ public class GoodsInfo implements Serializable {
         this.image = image == null ? null : image.trim();
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

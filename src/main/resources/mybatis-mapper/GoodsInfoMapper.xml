@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.GoodsInfo" >
     <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
     <result column="version" property="version" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -23,7 +23,7 @@
   <insert id="insert" parameterType="me.importtao.seckillbackend.model.GoodsInfo" >
     insert into goods_info (goods_id, image, price, 
       version)
-    values (#{goodsId,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
+    values (#{goodsId,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE},
       #{version,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="me.importtao.seckillbackend.model.GoodsInfo" >
@@ -50,7 +50,7 @@
         #{image,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=INTEGER},
+        #{price,jdbcType=DOUBLE},
       </if>
       <if test="version != null" >
         #{version,jdbcType=INTEGER},
@@ -64,7 +64,7 @@
         image = #{image,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=DOUBLE},
       </if>
       <if test="version != null" >
         version = #{version,jdbcType=INTEGER},
@@ -75,7 +75,7 @@
   <update id="updateByPrimaryKey" parameterType="me.importtao.seckillbackend.model.GoodsInfo" >
     update goods_info
     set image = #{image,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
       version = #{version,jdbcType=INTEGER}
     where goods_id = #{goodsId,jdbcType=VARCHAR}
   </update>

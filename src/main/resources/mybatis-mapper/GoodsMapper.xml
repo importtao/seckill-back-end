@@ -6,10 +6,10 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
-    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="seller_id" property="sellerId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    goods_id, name, detail, image, version
+    goods_id, name, detail, image, seller_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -23,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="me.importtao.seckillbackend.model.Goods" >
     insert into goods (goods_id, name, detail, 
-      image, version)
+      image, seller_id)
     values (#{goodsId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
+      #{image,jdbcType=VARCHAR}, #{sellerId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="me.importtao.seckillbackend.model.Goods" >
     insert into goods
@@ -42,8 +42,8 @@
       <if test="image != null" >
         image,
       </if>
-      <if test="version != null" >
-        version,
+      <if test="sellerId != null" >
+        seller_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -59,8 +59,8 @@
       <if test="image != null" >
         #{image,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        #{version,jdbcType=INTEGER},
+      <if test="sellerId != null" >
+        #{seller_id,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -76,8 +76,8 @@
       <if test="image != null" >
         image = #{image,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        version = #{version,jdbcType=INTEGER},
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=VARCHAR},
       </if>
     </set>
     where goods_id = #{goodsId,jdbcType=VARCHAR}
@@ -87,7 +87,23 @@
     set name = #{name,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
-      version = #{version,jdbcType=INTEGER}
+      seller_id = #{sellerId,jdbcType=VARCHAR}
     where goods_id = #{goodsId,jdbcType=VARCHAR}
   </update>
+
+  <!--获取商户所属商品-->
+  <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where seller_id = #{sellerId,jdbcType=VARCHAR}
+  </select>
+
+  <!--关键字获取商品列表-->
+  <select id="selectByKeyWord" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where name like concat('%',#{keyWord,jdbcType=VARCHAR},'%') or detail like '%'#{keyWord,jdbcType=VARCHAR}'%'
+  </select>
 </mapper>

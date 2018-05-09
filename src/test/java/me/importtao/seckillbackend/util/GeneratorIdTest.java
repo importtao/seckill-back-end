@@ -18,18 +18,18 @@ import javax.annotation.Resource;
  */
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-public class GeneratorUserIdTest {
+public class GeneratorIdTest {
     @Resource
-    GeneratorUserId generatorUserId;
+    GeneratorId generatorId;
     @Test
     public void getUserId() throws Exception {
-        System.out.println(generatorUserId.getUserId());
+        System.out.println(generatorId.getUserId());
 
     }
 
     @Test
     public void getSellerId() throws Exception {
-        System.out.println(generatorUserId.getSellerId());
+        System.out.println(generatorId.getSellerId());
     }
 
 }

@@ -6,7 +6,7 @@ import me.importtao.seckillbackend.model.Seller;
 import me.importtao.seckillbackend.model.SellerInfo;
 import me.importtao.seckillbackend.util.Encode;
 import me.importtao.seckillbackend.util.GeneratorTimeRandomString;
-import me.importtao.seckillbackend.util.GeneratorUserId;
+import me.importtao.seckillbackend.util.GeneratorId;
 import me.importtao.seckillbackend.util.SellerToken;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class SellerServiceImpl implements SellerService{
     @Resource
     private SellerService sellerService;
     @Resource
-    private GeneratorUserId generatorUserId;
+    private GeneratorId generatorId;
     @Resource
     private Seller seller;
     @Resource
@@ -83,7 +83,7 @@ public class SellerServiceImpl implements SellerService{
         //系统号规则
         String sellerId;
         try {
-            sellerId = generatorUserId.getSellerId();
+            sellerId = generatorId.getSellerId();
         } catch (Exception e) {
             logger.error("已达当日注册限制人数");
             map.put("status","1");

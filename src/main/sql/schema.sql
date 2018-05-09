@@ -21,7 +21,7 @@ CREATE TABLE user_sequence(
   today_date DATE not null COMMENT '流水号日期',
   max_sequence varchar(120) not null COMMENT '当前序列号',
   update_time timestamp not null comment '更新时间',
-  status tinyint NOT NULL DEFAULT 0 COMMENT '用户状态：0：用户 1：商户',
+  status tinyint NOT NULL DEFAULT 0 COMMENT '用户类型：0：用户 1：商户 2：商品',
   id varchar(9) NOT NULL DEFAULT '' COMMENT '无实意',
   primary key(id),
   key idx_max_sequence(max_sequence)
@@ -72,7 +72,7 @@ CREATE TABLE goods (
   name varchar(200) DEFAULT NULL COMMENT '名字',
   detail varchar(500) DEFAULT NULL COMMENT '简介',
   image  varchar(255) DEFAULT NULL COMMENT '图片',
-  version int(11) DEFAULT NULL COMMENT '保留字段',
+  seller_id varchar(18) not null comment '所属商户',
   PRIMARY KEY (goods_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='商品表';
 
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS goods_info;
 CREATE TABLE goods_info (
   goods_id varchar(18) not null comment '商品id 编号：共 1-8:添加日期 9-10所属类型：00-99: 11-18:流水号',
   image  varchar(255) DEFAULT NULL COMMENT '图片',
-  price int(11) DEFAULT NULL COMMENT '商品价格',
+  price double(15,4) NOT NULL COMMENT '商品价格',
   version int(11) DEFAULT NULL COMMENT '保留字段',
   PRIMARY KEY (goods_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='商品信息表';

@@ -1,7 +1,9 @@
 package me.importtao.seckillbackend.model;
 
-import java.io.Serializable;
+import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+@Component
 public class Goods implements Serializable {
     private String goodsId;
 
@@ -11,7 +13,7 @@ public class Goods implements Serializable {
 
     private String image;
 
-    private Integer version;
+    private String sellerId;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +49,11 @@ public class Goods implements Serializable {
         this.image = image == null ? null : image.trim();
     }
 
-    public Integer getVersion() {
-        return version;
+    public String getSellerId() {
+        return sellerId;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 }

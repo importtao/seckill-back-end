@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Package me.importtao.seckill.util
  * Class GeneratorUserId
- * Description: 生成用户ID
+ * Description: 生成ID
  *
  * @author importtao
  * date 2018/1/18 14:18
@@ -22,21 +22,26 @@ import java.util.Date;
 @Transactional(rollbackFor = Exception.class)
 @Service
 @Scope("singleton")
-public  class GeneratorUserId {
+public  class GeneratorId {
     @Autowired
     private UserSequenceMapper userSequenceMapper;
     /**
      * 用户编号：编号：共18位 1-8:注册日期 9:用户类型 0：普通用户 1：商户 10-18:用户流水号'
      */
-    private static int userType = 0;
+    private static int type = 0;
 
     synchronized public  String getUserId() throws Exception{
-        userType = 0;
+        type = 0;
         return getId();
     }
 
     public  String getSellerId ()throws Exception{
-        userType = 1;
+        type = 1;
+        return getId();
+    }
+
+    public  String getGoodsId ()throws Exception{
+        type = 2;
         return getId();
     }
 
@@ -45,13 +50,13 @@ public  class GeneratorUserId {
         String sequence = "000000001";
         SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
-        String id = sdf.format(date)+userType;
+        String id = sdf.format(date)+type;
         UserSequence userSequence = userSequenceMapper.selectByPrimaryKey(id);
         if(userSequence == null){
             UserSequence userSequenceNew = new UserSequence();
             userSequenceNew.setMaxSequence(sequence);
             userSequenceNew.setTodayDate(date);
-            userSequenceNew.setStatus(userType);
+            userSequenceNew.setStatus(type);
             userSequenceNew.setId(id);
             userSequenceNew.setUpdateTime(date);
             userSequenceMapper.insert(userSequenceNew);
@@ -78,14 +83,14 @@ public  class GeneratorUserId {
             sequence = new String(c);
             userSequence.setMaxSequence(sequence);
             userSequence.setUpdateTime(new Date());
-            userSequence.setStatus(userType);
+            userSequence.setStatus(type);
             userSequence.setId(id);
             userSequenceMapper.updateByPrimaryKey(userSequence);
         }
         StringBuilder userId = new StringBuilder();
         String dateStr = sdf.format(date);
         userId.append(dateStr);
-        userId.append(userType);
+        userId.append(type);
         userId.append(sequence);
         return userId.toString();
     }

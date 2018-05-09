@@ -7,7 +7,7 @@ import me.importtao.seckillbackend.model.User;
 import me.importtao.seckillbackend.model.UserInfo;
 import me.importtao.seckillbackend.util.Encode;
 import me.importtao.seckillbackend.util.GeneratorTimeRandomString;
-import me.importtao.seckillbackend.util.GeneratorUserId;
+import me.importtao.seckillbackend.util.GeneratorId;
 import me.importtao.seckillbackend.util.Token;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
     @Resource
     private UserService userService;
     @Resource
-    private GeneratorUserId generatorUserId;
+    private GeneratorId generatorId;
     @Resource
     private User user;
     @Resource
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService{
         //系统号规则
         String userId;
         try {
-            userId = generatorUserId.getUserId();
+            userId = generatorId.getUserId();
         } catch (Exception e) {
             logger.error("已达当日注册限制人数");
             map.put("status","1");

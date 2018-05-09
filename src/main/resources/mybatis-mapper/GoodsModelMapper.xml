@@ -103,4 +103,17 @@
       version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods_model
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+  </select>
+
+  <!--删除商品所有型号-->
+  <delete id="deleteByGoodsId" parameterType="java.lang.String" >
+    delete from goods_model
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+  </delete>
 </mapper>
