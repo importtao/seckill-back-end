@@ -69,11 +69,11 @@ public class GoodsServiceImplTest {
     @Test
     public void addGoodsModel() throws Exception {
         String token = login();
-        goodsModel.setGoodsId("201805092000000001");
+        goodsModel.setGoodsId("201805102000000003");
         goodsModel.setDiscription("黑色");
         goodsModel.setInventry(12);
-        Byte b = 1;
-        goodsModel.setModelCode(++b);
+        /*Byte b = 1;
+        goodsModel.setModelCode(++b);*/
         HashMap result =goodsService.addGoodsModel(token,goodsModel);
         System.out.println(JSON.toJSON(result));
     }

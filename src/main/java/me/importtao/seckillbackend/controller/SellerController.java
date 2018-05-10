@@ -101,7 +101,7 @@ public class SellerController {
         if(detail == null||detail.equals("")){
             request.setAttribute("detail",detail);
         }
-        map = sellerService.login(request);
+        map = sellerService.register(request);
         return map;
     }
 

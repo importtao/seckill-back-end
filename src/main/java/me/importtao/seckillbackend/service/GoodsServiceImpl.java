@@ -84,6 +84,9 @@ public class GoodsServiceImpl implements GoodsService {
         HashMap map = new HashMap(16);
         boolean tokenAble = sellerToken.tokenValidate(token);
         if(tokenAble){
+            Byte maxCode = goodsModelMapper.selectMaxModelCode(goodsModel.getGoodsId());
+            maxCode++;
+            goodsModel.setModelCode(maxCode);
             goodsModelMapper.insert(goodsModel);
             map.put("status",0);
             map.put("msg","添加成功");

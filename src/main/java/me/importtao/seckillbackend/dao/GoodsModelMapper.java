@@ -24,4 +24,6 @@ public interface GoodsModelMapper {
 
     int deleteByGoodsId(@Param("goodsId") String goodsId);
 
+    Byte selectMaxModelCode(@Param("goodsId") String goodsId);
+
 }

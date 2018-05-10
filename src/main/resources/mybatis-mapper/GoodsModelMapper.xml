@@ -116,4 +116,11 @@
     delete from goods_model
     where goods_id = #{goodsId,jdbcType=VARCHAR}
   </delete>
+
+  <select id="selectMaxModelCode"  resultType="java.lang.Byte" parameterType="java.lang.String" >
+    select
+     count(model_code)
+    from goods_model
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+  </select>
 </mapper>

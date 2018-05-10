@@ -49,7 +49,7 @@ public class GoodsController {
         HashMap map = new HashMap(16);
         String defaultImg = "img.png";
         if(token == null||"".equals(token)){
-            map.put("status","1");
+            map.put("status","2");
             map.put("msg","未登录或登录超时请重新登录！");
             return map;
         }
@@ -94,9 +94,8 @@ public class GoodsController {
         String goodsId = request.getParameter("goodsId");
         String inventry = request.getParameter("inventry");
         String description = request.getParameter("description");
-        String modelCode = request.getParameter("modelCode");
         if(token == null||"".equals(token)){
-            map.put("status","1");
+            map.put("status","2");
             map.put("msg","未登录或登录超时请重新登录！");
             return map;
         }
@@ -113,15 +112,9 @@ public class GoodsController {
             map.put("msg","请填写类型描述");
             return map;
         }
-        if(modelCode == null||"".equals(modelCode)){
-            modelCode = "0";
-        }
         goodsModel.setGoodsId(goodsId);
         goodsModel.setInventry(Integer.parseInt(inventry));
         goodsModel.setDiscription(description);
-        Byte b = 0;
-        b = Byte.valueOf(modelCode);
-        goodsModel.setModelCode(b);
         map = goodsService.addGoodsModel(token,goodsModel);
         return map;
     }
@@ -144,7 +137,7 @@ public class GoodsController {
         HashMap map = new HashMap(16);
         String token = request.getParameter("sellerToken");
         if(token == null||"".equals(token)){
-            map.put("status","1");
+            map.put("status","2");
             map.put("msg","未登录或登录超时请重新登录！");
             return map;
         }
@@ -158,7 +151,7 @@ public class GoodsController {
         String token = request.getParameter("sellerToken");
         String goodsId = request.getParameter("goodsId");
         if(token == null||"".equals(token)){
-            map.put("status","1");
+            map.put("status","2");
             map.put("msg","未登录或登录超时请重新登录！");
             return map;
         }
@@ -183,7 +176,7 @@ public class GoodsController {
         String goodsId = request.getParameter("goodsId");
         String defaultImg = "img.png";
         if(token == null||"".equals(token)){
-            map.put("status","1");
+            map.put("status","2");
             map.put("msg","未登录或登录超时请重新登录！");
             return map;
         }
@@ -227,7 +220,7 @@ public class GoodsController {
         String modelCode = request.getParameter("modelCode");
         String id = request.getParameter("id");
         if(token == null||"".equals(token)){
-            map.put("status","1");
+            map.put("status","2");
             map.put("msg","未登录或登录超时请重新登录！");
             return map;
         }
