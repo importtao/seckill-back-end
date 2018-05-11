@@ -1,6 +1,7 @@
 package me.importtao.seckillbackend.controller;
 
 import me.importtao.seckillbackend.service.UserService;
+import me.importtao.seckillbackend.util.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,6 +28,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private Token token;
 
     @GetMapping("/user")
     @Cacheable(value = "userCache", keyGenerator="keyGenerator")
@@ -75,6 +78,26 @@ public class UserController {
     public Object delete(HttpServletRequest request, @PathVariable("id")Integer id){
         Map m = new HashMap<>();
         return m;
+    }
+    @GetMapping("/userModel")
+    public HashMap getUserByToken(HttpServletRequest request){
+        HashMap map = new HashMap(16);
+        String userToken = request.getParameter("token");
+        if(userToken == null||userToken.equals("")){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时");
+            return map;
+        }
+        boolean tokenValidate = token.tokenValidate(userToken);
+        if(!tokenValidate){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时");
+
+        }else{
+            map = token.getUserByToken(userToken);
+            map.put("status","0");
+        }
+        return map;
     }
 
 }

@@ -90,8 +90,8 @@ public class UserServiceTest {
         System.out.println(request.getParameter("passwords")+"--------");
         Map map = userService.login(request);
         System.out.println(JSON.toJSONString(map));*/
-        System.out.println(("通过token获取的数据为："+JSON.toJSONString(token.tokenValidate("MTUyNTU5NTM3NTIzMzIwMTgwNTAzMDAwMDAwMDAwMw=="))));
-        System.out.println(("通过token获取的数据为："+JSON.toJSONString(token.getUserByToken("MTUyNTU5NTM3NTIzMzIwMTgwNTAzMDAwMDAwMDAwMw=="))));
+        System.out.println(("通过token获取的数据为："+JSON.toJSONString(token.tokenValidate("MTUyNjAzNjg5NDcxNTIwMTgwNTAzMDAwMDAwMDAwMw=="))));
+        System.out.println(("通过token获取的数据为："+JSON.toJSONString(token.getUserByToken("MTUyNjAzNjg5NDcxNTIwMTgwNTAzMDAwMDAwMDAwMw=="))));
 
     }
 

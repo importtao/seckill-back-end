@@ -1,6 +1,7 @@
 package me.importtao.seckillbackend.controller;
 
 import me.importtao.seckillbackend.service.SellerService;
+import me.importtao.seckillbackend.util.SellerToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,6 +30,9 @@ public class SellerController {
     private static final Logger logger = LoggerFactory.getLogger(SellerController.class);
     @Resource
     private SellerService sellerService;
+    @Resource
+    private SellerToken sellerToken;
+
 
     @GetMapping("/seller")
     @Cacheable(value = "sellerCache", keyGenerator="keyGenerator")
@@ -102,6 +106,25 @@ public class SellerController {
             request.setAttribute("detail",detail);
         }
         map = sellerService.register(request);
+        return map;
+    }
+    @GetMapping("/sellerModel")
+    public HashMap getSellerByToken(HttpServletRequest request){
+        String token = request.getParameter("sellerToken");
+        HashMap map = new HashMap(16);
+        if(token == null||"".equals(token)){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时请重新登录！");
+            return map;
+        }
+        boolean tokenValidate = sellerToken.tokenValidate(token);
+        if(tokenValidate){
+            map = sellerToken.getSellerByToken(token);
+            map.put("status","0");
+        }else{
+            map.put("status","2");
+            map.put("msg","未登录或登录超时请重新登录！");
+        }
         return map;
     }
 

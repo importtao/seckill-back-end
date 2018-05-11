@@ -52,7 +52,7 @@ public class Token {
      * @param token token
      * @return   boolean token有效性
      */
-    public boolean tokenValidate(String token)throws IOException{
+    public boolean tokenValidate(String token){
         return redisTemplate.hasKey(token);
     }
 
@@ -63,7 +63,7 @@ public class Token {
      * @param token token
      * @return   boolean token有效性
      */
-    public void tokenTimeOut(String token)throws IOException{
+    public void tokenTimeOut(String token){
         redisTemplate.delete(token);
     }
 
@@ -74,7 +74,7 @@ public class Token {
      * @param token token
      * @return   Object 用户数据
      */
-    public HashMap getUserByToken(String token)throws IOException{
+    public HashMap getUserByToken(String token){
         ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
         return (HashMap) valueOperations.get(token);
     }

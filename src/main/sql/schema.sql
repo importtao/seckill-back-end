@@ -118,6 +118,8 @@ CREATE TABLE addr (
   county varchar(30) not null comment '县/区',
   town varchar(30) not null comment '镇/街道',
   detail varchar(100) not null comment '详细地址',
+  tel varchar(45) DEFAULT NULL COMMENT '收货人电话',
+  name varchar(45) DEFAULT NULL COMMENT '收货人姓名',
   version int(11) DEFAULT NULL COMMENT '保留字段',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='收货地址';
