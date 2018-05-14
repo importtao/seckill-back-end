@@ -265,6 +265,7 @@ public class GoodsController {
             return map;
         }
         map = goodsService.getGoods(goodsId);
+        map.put("status","0");
         return map;
     }
 }

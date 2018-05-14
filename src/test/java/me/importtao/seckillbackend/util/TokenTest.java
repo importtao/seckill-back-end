@@ -29,6 +29,7 @@ public class TokenTest {
 
     @Test
     public void tokenValidate() throws Exception {
+        System.out.println(token.tokenValidate("MTUyNjIyMDM1OTIyNDIwMTgwNTAzMDAwMDAwMDAwMw=="));
     }
 
     @Test

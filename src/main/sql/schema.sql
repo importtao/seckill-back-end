@@ -139,7 +139,7 @@ CREATE TABLE cart (
 DROP TABLE IF EXISTS order_form;
 CREATE TABLE order_form (
   order_id varchar(18) not null comment '订单id',
-  user_id varchar(18) not null comment '用户编号：共 1-8:注册日期 9-11:注册系统 12:用户状态 0普通用户 1会员 1超级会员 13-18:用户流水号',
+  user_id varchar(18) not null comment '用户编号',
   goods_id varchar(18) not null comment '商品id',
   version int(11) DEFAULT NULL COMMENT '保留字段',
   model tinyint NOT NULL DEFAULT 0 COMMENT '型号',

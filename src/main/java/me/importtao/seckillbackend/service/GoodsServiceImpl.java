@@ -137,6 +137,7 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> goodsList = goodsMapper.selectByKeyWord(keyWord);
         List<HashMap> result = getModel(goodsList);
         map.put("status",0);
+        map.put("length",result.size());
         map.put("result",result);
         return map;
     }

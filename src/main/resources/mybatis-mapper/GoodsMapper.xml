@@ -104,6 +104,6 @@
     select
     <include refid="Base_Column_List" />
     from goods
-    where name like concat('%',#{keyWord,jdbcType=VARCHAR},'%') or detail like '%'#{keyWord,jdbcType=VARCHAR}'%'
+    where name like concat('%',#{keyWord,jdbcType=VARCHAR},'%') or detail like concat('%',#{keyWord,jdbcType=VARCHAR},'%')
   </select>
 </mapper>

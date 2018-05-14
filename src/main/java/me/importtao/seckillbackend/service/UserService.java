@@ -67,4 +67,23 @@ public interface UserService {
      * @return map
      */
     HashMap login(HttpServletRequest request);
+
+    /**
+     * description 修改用户信息
+     * @author importtao
+     * @date 2018/5/13 20:24
+     * @param userName userPhone
+     * @return HashMap
+     */
+    HashMap updateUser(String userName,String userPhone,String userId);
+
+    /**
+     * description 修改头像
+     * @author importtao
+     * @date 2018/5/14 10:24
+     * @param userImg userImg
+     * @param       userId       userId
+     * @return    HashMap
+     */
+    HashMap changeImg(String userImg,String userId);
 }

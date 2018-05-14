@@ -181,6 +181,49 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
+     * description 修改用户信息
+     *
+     * @param userName  userPhone
+     * @param userPhone
+     * @param userImg
+     * @param userId    @return HashMap
+     * @author importtao
+     * @date 2018/5/13 20:24
+     */
+    @Override
+    public HashMap updateUser(String userName, String userPhone, String userId) {
+        HashMap map = new HashMap(16);
+        user.setUserId(userId);
+        user.setUserName(userName);
+        user.setUserPhone(Long.valueOf(userPhone));
+        userMapper.updateByPrimaryKeySelective(user);
+
+        map.put("status","0");
+        map.put("msg","修改成功");
+        return map;
+    }
+
+    /**
+     * description 修改头像
+     *
+     * @param userImg userImg
+     * @param userId
+     * @return HashMap
+     * @author importtao
+     * @date 2018/5/14 10:24
+     */
+    @Override
+    public HashMap changeImg(String userImg, String userId) {
+        HashMap map = new HashMap(16);
+        userInfo.setUserId(userId);
+        userInfo.setUserImg(userImg);
+        userInfoMapper.updateByPrimaryKeySelective(userInfo);
+        map.put("status","0");
+        map.put("msg","修改成功");
+        return map;
+    }
+
+    /**
      * description 验证用户名是否被注册
      *
      * @param request 封装请求信息

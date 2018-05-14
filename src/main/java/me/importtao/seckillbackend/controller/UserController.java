@@ -69,14 +69,80 @@ public class UserController {
         return map;
 
     }
+
     @PutMapping("/user")
-    public Object change(HttpServletRequest request, @RequestParam(value = "name")Integer id){
-        Map m = new HashMap<>();
+    public Object change(HttpServletRequest request){
+        Map map = new HashMap<>(16);
+        String userToken = request.getParameter("token");
+        String userName = request.getParameter("userName");
+        String userPhone = request.getParameter("userPhone");
+        String userId = request.getParameter("userId");
+        logger.info(userToken+"---------------------");
+        logger.info(userName+"---------------------");
+        logger.info(userPhone+"---------------------");
+        if(userToken == null||"".equals(userToken)){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时请重新登录！");
+            return map;
+        }
+        boolean tokenValidate = token.tokenValidate(userToken);
+        if(!tokenValidate){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时请重新登录！");
+            return map;
+        }
+        if(userName == null||"".equals(userName)){
+            map.put("status","1");
+            map.put("msg","用户名不能为空");
+            return map;
+        }
+        if(userPhone == null||"".equals(userPhone)){
+            map.put("status","1");
+            map.put("msg","电话不能为空");
+            return map;
+        }
+        Map m = userService.userNameCheck(request);
+        boolean userNameCheck = (m.get("status")=="0"||"0".equals(m.get("status")));
+        if(userNameCheck){
+            map = userService.updateUser(userName,userPhone,userId);
+            return map;
+        }else{
+            map.put("status","1");
+            map.put("msg",m.get("msg"));
+            return map;
+        }
+    }
+
+    @PutMapping("/userImg")
+    public Object changeImg(HttpServletRequest request){
+        Map map = new HashMap<>(16);
+        String userToken = request.getParameter("token");
+        String userImg = request.getParameter("userImg");
+        String userId = request.getParameter("userId");
+        logger.info(userToken+"---------------------");
+        logger.info(userImg+"---------------------");
+        if(userToken == null||"".equals(userToken)){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时请重新登录！");
+            return map;
+        }
+        boolean tokenValidate = token.tokenValidate(userToken);
+        if(!tokenValidate){
+            map.put("status","2");
+            map.put("msg","未登录或登录超时请重新登录！");
+            return map;
+        }
+        if(userImg == null||"".equals(userImg)){
+            userImg = "img.jpg";
+        }
+        Map m = userService.changeImg(userImg,userId);
         return m;
+
     }
     @DeleteMapping("/user/{id}")
     public Object delete(HttpServletRequest request, @PathVariable("id")Integer id){
         Map m = new HashMap<>();
+
         return m;
     }
     @GetMapping("/userModel")
