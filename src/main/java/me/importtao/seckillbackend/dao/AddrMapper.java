@@ -1,6 +1,9 @@
 package me.importtao.seckillbackend.dao;
 
 import me.importtao.seckillbackend.model.Addr;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AddrMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface AddrMapper {
     int updateByPrimaryKeySelective(Addr record);
 
     int updateByPrimaryKey(Addr record);
+
+    List<Addr> selectByUserId(@Param("userId") String userId);
 }

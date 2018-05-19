@@ -143,6 +143,7 @@ CREATE TABLE order_form (
   goods_id varchar(18) not null comment '商品id',
   version int(11) DEFAULT NULL COMMENT '保留字段',
   model tinyint NOT NULL DEFAULT 0 COMMENT '型号',
+  create_time timestamp not null comment '创建时间',
   number int(11) DEFAULT NULL COMMENT '数量',
   PRIMARY KEY (order_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='订单表';
@@ -156,5 +157,21 @@ CREATE TABLE order_sequence(
   primary key(today_date),
   key idx_max_sequence(max_sequence)
 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='订单流水号表';
+
+DROP TABLE IF EXISTS order_info;
+CREATE TABLE order_info (
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT '表主键 自动递增 无实义',
+  order_id varchar(18) not null comment '订单id',
+  money double(15,4) NOT NULL COMMENT '订单金额',
+  addr BIGINT NOT NULL COMMENT '收货地址id',
+  payCode  varchar(255) DEFAULT NULL COMMENT '支付二维码',
+  state tinyint NOT NULL DEFAULT 0 COMMENT '型号 0：创建成功 1:支付完成  2:商家已发货 3：已签收',
+  reserved_fields varchar(20) DEFAULT NULL COMMENT '保留字段',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='订单信息表';
+
+#搜索记录
+#当前最热
+#官方推荐
 
 

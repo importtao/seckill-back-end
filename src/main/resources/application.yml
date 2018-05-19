@@ -72,4 +72,5 @@ tokenExpire: 1800000
 file:
   imgPath: E:/test/
   filePath: E:/test/
+  logoPath: E:/test/qrLogo.png
 

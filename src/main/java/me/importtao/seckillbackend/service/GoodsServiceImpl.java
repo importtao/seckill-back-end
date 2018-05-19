@@ -37,6 +37,8 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsModelMapper goodsModelMapper;
     @Resource
     private SellerToken sellerToken;
+    @Resource
+    private GoodsModel goodsModel;
     public GoodsServiceImpl() {
         super();
     }
@@ -61,6 +63,13 @@ public class GoodsServiceImpl implements GoodsService {
             goods.setSellerId(seller.getSellerId());
             goodsMapper.insert(goods);
             goodsInfoMapper.insert(goodsInfo);
+            String goodsid = goods.getGoodsId();
+            goodsModel.setGoodsId(goodsid);
+            goodsModel.setDiscription("默认型号");
+            goodsModel.setInventry(0);
+            byte code = 1;
+            goodsModel.setModelCode(code);
+            goodsModelMapper.insert(goodsModel);
             map.put("status",0);
             map.put("msg","添加成功");
         }else{
@@ -251,5 +260,20 @@ public class GoodsServiceImpl implements GoodsService {
             result.add(model);
         }
         return result;
+    }
+
+    /**
+     * description 获取首页最热商品
+     *
+     * @return HashMap
+     * @author importtao
+     * @date 2018/5/9 16:42
+     */
+    @Override
+    public HashMap getHotGoods() {
+        HashMap<String,Object> map = new HashMap<>(16);
+        map.put("hotList",goodsMapper.selectHotGoods());
+        map.put("status","0");
+        return map;
     }
 }

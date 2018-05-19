@@ -1,8 +1,10 @@
 package me.importtao.seckillbackend.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
-
+@Component
 public class SuccessKilled extends SuccessKilledKey implements Serializable {
     private Byte status;
 

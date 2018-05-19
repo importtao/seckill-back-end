@@ -95,5 +95,11 @@ public interface GoodsService {
      */
      HashMap getGoods(String goodsId);
 
-
+    /**
+     * description 获取首页最热商品
+     * @author importtao
+     * @date 2018/5/9 16:42
+     * @return   HashMap
+     */
+    HashMap getHotGoods();
 }

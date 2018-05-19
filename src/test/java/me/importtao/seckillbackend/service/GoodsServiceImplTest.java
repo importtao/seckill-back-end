@@ -136,4 +136,8 @@ public class GoodsServiceImplTest {
         System.out.println(token);
         return token;
     }
+    @Test
+    public void getHot(){
+        System.out.println(goodsService.getHotGoods());
+    }
 }

@@ -132,6 +132,13 @@ public class GoodsController {
         return map;
     }
 
+    @GetMapping("/hotGoods")
+    public HashMap gethotGoods(HttpServletRequest request){
+        HashMap map = new HashMap(16);
+        map = goodsService.getHotGoods();
+        return map;
+    }
+
     @GetMapping("/myGoodsList")
     public HashMap getMyGoodsList(HttpServletRequest request){
         HashMap map = new HashMap(16);

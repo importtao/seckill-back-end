@@ -1,8 +1,10 @@
 package me.importtao.seckillbackend.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
-
+@Component
 public class UserSequence implements Serializable {
     public String getId() {
         return id;

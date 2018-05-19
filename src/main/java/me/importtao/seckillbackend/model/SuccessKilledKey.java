@@ -1,7 +1,9 @@
 package me.importtao.seckillbackend.model;
 
-import java.io.Serializable;
+import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+@Component
 public class SuccessKilledKey implements Serializable {
     private Long seckillId;
 

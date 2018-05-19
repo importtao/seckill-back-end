@@ -106,4 +106,44 @@
     from goods
     where name like concat('%',#{keyWord,jdbcType=VARCHAR},'%') or detail like concat('%',#{keyWord,jdbcType=VARCHAR},'%')
   </select>
+
+
+  <resultMap id="hotList" type="me.importtao.seckillbackend.viewModel.HotGoods" >
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <!--查询最热商品-->
+  <select id="selectHotGoods" resultMap="hotList" >
+    SELECT
+      g.goods_id AS goodsId,
+      g.`name` AS name,
+      g.detail AS detail,
+      gi.image AS img,
+      gi.price AS price
+    FROM
+      goods g,
+      goods_info gi
+    WHERE
+      g.goods_id IN (
+        SELECT
+          cg.goods_id
+        FROM
+          (
+            SELECT
+              c.goods_id
+            FROM
+              cart c
+            GROUP BY
+              c.goods_id
+            ORDER BY
+              COUNT(c.goods_id) ASC
+            LIMIT 0,
+              6
+          ) AS cg
+      )
+      AND g.goods_id = gi.goods_id
+  </select>
 </mapper>

@@ -1,7 +1,10 @@
 package me.importtao.seckillbackend.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
+@Component
 public class Addr implements Serializable {
     private Long id;
 
@@ -16,6 +19,10 @@ public class Addr implements Serializable {
     private String town;
 
     private String detail;
+
+    private String tel;
+
+    private String name;
 
     private Integer version;
 
@@ -75,6 +82,22 @@ public class Addr implements Serializable {
 
     public void setDetail(String detail) {
         this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public Integer getVersion() {

@@ -1,6 +1,7 @@
 package me.importtao.seckillbackend.dao;
 
 import me.importtao.seckillbackend.model.Goods;
+import me.importtao.seckillbackend.viewModel.HotGoods;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface GoodsMapper {
     List<Goods> selectBySellerId(@Param("sellerId") String sellerId);
 
     List<Goods> selectByKeyWord(@Param("keyWord") String keyWord);
+
+    List<HotGoods> selectHotGoods();
 }

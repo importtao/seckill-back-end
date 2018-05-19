@@ -79,4 +79,19 @@
       end_time = #{endTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from seckill_time
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectExitByGoodsId" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select
+    count(*)
+    from seckill_time
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+    limit 0,1
+  </select>
 </mapper>

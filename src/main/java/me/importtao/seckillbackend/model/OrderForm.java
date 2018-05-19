@@ -1,6 +1,7 @@
 package me.importtao.seckillbackend.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class OrderForm implements Serializable {
     private String orderId;
@@ -12,6 +13,8 @@ public class OrderForm implements Serializable {
     private Integer version;
 
     private Byte model;
+
+    private Date createTime;
 
     private Integer number;
 
@@ -55,6 +58,14 @@ public class OrderForm implements Serializable {
 
     public void setModel(Byte model) {
         this.model = model;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getNumber() {
