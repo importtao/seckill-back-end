@@ -94,9 +94,9 @@
 
   <resultMap id="WishLishMap" type="me.importtao.seckillbackend.viewModel.WishListModel" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="model" property="model" jdbcType="TINYINT" />
+    <result column="goodsId" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goodsId" property="userId" jdbcType="VARCHAR" />
+    <result column="typeModel" property="model" jdbcType="TINYINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="img" property="img" jdbcType="VARCHAR" />

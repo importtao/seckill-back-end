@@ -35,13 +35,18 @@ public  class GeneratorId {
         return getId();
     }
 
-    public  String getSellerId ()throws Exception{
+    synchronized public  String getSellerId ()throws Exception{
         type = 1;
         return getId();
     }
 
-    public  String getGoodsId ()throws Exception{
+    synchronized public  String getGoodsId ()throws Exception{
         type = 2;
+        return getId();
+    }
+
+    synchronized public  String getOrderId ()throws Exception{
+        type = 3;
         return getId();
     }
 

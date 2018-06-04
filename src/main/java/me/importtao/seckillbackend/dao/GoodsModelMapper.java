@@ -26,4 +26,7 @@ public interface GoodsModelMapper {
 
     Byte selectMaxModelCode(@Param("goodsId") String goodsId);
 
+    int selectInventry(@Param("goodsId") String goodsId,@Param("modelCode") Byte modelCode);
+
+    int updateInventry(@Param("goodsId") String goodsId,@Param("modelCode") Byte modelCode,@Param("inventry") int inventry);
 }

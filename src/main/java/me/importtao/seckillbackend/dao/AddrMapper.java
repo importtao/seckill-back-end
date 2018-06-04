@@ -1,6 +1,7 @@
 package me.importtao.seckillbackend.dao;
 
 import me.importtao.seckillbackend.model.Addr;
+import me.importtao.seckillbackend.viewModel.SimpleAddress;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface AddrMapper {
     int updateByPrimaryKey(Addr record);
 
     List<Addr> selectByUserId(@Param("userId") String userId);
+
+    List<SimpleAddress> selectSimpleAddress(@Param("userId") String userId);
 }

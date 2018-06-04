@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.importtao.seckillbackend.model.OrderFormMapper" >
+<mapper namespace="me.importtao.seckillbackend.dao.OrderFormMapper" >
   <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.OrderForm" >
     <id column="order_id" property="orderId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
@@ -114,4 +114,190 @@
       number = #{number,jdbcType=INTEGER}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
+
+  <resultMap id="orderResultMap" type="me.importtao.seckillbackend.viewModel.OrderModel" >
+    <id column="orderId" property="orderId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="goodsId" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="TINYINT" />
+    <result column="modelName" property="modelName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="addrName" property="addrName" jdbcType="VARCHAR" />
+    <result column="paycode" property="paycode" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+  </resultMap>
+  <select id="selectOrderList" resultMap="orderResultMap" parameterType="java.lang.String" >
+    select
+      f.order_id AS orderId,
+      f.user_id AS userId,
+      f.goods_id AS goodsId,
+      g.name AS goodsName,
+      f.model AS model,
+      gm.discription AS modelName,
+      f.create_time AS createTime,
+      f.number AS number,
+      i.money AS money,
+      concat(a.province,a.city,a.county,a.detail) AS addr,
+      concat(a.name,a.tel) AS addrName,
+      i.payCode AS paycode,
+      i.state AS state
+    FROM
+    order_form AS f,
+    order_info AS i,
+      goods AS g,
+      goods_model AS gm,
+      addr AS a
+    WHERE
+    f.order_id = i.order_id
+    AND f.goods_id = g.goods_id
+    AND f.model = gm.model_code
+    AND f.goods_id = gm.goods_id
+    AND i.addr = a.id
+    AND f.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectOrderListBySellerId" resultMap="orderResultMap" parameterType="java.lang.String" >
+    SELECT
+      f.order_id AS orderId,
+      f.user_id AS userId,
+      f.goods_id AS goodsId,
+      g.name AS goodsName,
+      f.model AS model,
+      gm.discription AS modelName,
+      f.create_time AS createTime,
+      f.number AS number,
+      i.money AS money,
+      i.addr AS addr,
+      a.detail AS addrName,
+      i.payCode AS paycode,
+      i.state AS state
+    FROM
+      order_form AS f,
+      order_info AS i,
+      goods AS g,
+      goods_model AS gm,
+      addr AS a
+    WHERE
+      f.order_id = i.order_id
+      AND f.goods_id = g.goods_id
+      AND f.model = gm.model_code
+      AND f.goods_id = gm.goods_id
+      AND i.addr = a.id
+      AND  of.goods_id IN (
+        SELECT
+          g.goods_id
+        FROM
+          g.goods as g
+        WHERE
+          g.seller_id = #{sellerId,jdbcType=VARCHAR}
+      )
+  </select>
+
+  <select id="selectPendingOrderList" resultMap="orderResultMap" parameterType="java.lang.String" >
+    SELECT
+      f.order_id AS orderId,
+      f.user_id AS userId,
+      f.goods_id AS goodsId,
+      g.name AS goodsName,
+      f.model AS model,
+      gm.discription AS modelName,
+      f.create_time AS createTime,
+      f.number AS number,
+      i.money AS money,
+      concat(a.province,a.city,a.county,a.detail) AS addr,
+      concat(a.name,a.tel) AS addrName,
+      i.payCode AS paycode,
+      i.state AS state
+    FROM
+      order_form AS f,
+      order_info AS i,
+      goods AS g,
+      goods_model AS gm,
+      addr AS a
+    WHERE
+      f.order_id = i.order_id
+      AND f.goods_id = g.goods_id
+      AND f.model = gm.model_code
+      AND f.goods_id = gm.goods_id
+      AND i.addr = a.id AND
+      f.goods_id IN (
+    SELECT
+    g.goods_id
+    FROM
+    goods as g
+    WHERE
+    g.seller_id = #{sellerId,jdbcType=VARCHAR}
+    ) AND (oi.state =1 or oi.state =0)
+  </select>
+
+  <select id="selectHistoricalOrderList" resultMap="orderResultMap" parameterType="java.lang.String" >
+    SELECT
+      f.order_id AS orderId,
+      f.user_id AS userId,
+      f.goods_id AS goodsId,
+      g.name AS goodsName,
+      f.model AS model,
+      gm.discription AS modelName,
+      f.create_time AS createTime,
+      f.number AS number,
+      i.money AS money,
+      concat(a.province,a.city,a.county,a.detail) AS addr,
+      concat(a.name,a.tel) AS addrName,
+      i.payCode AS paycode,
+      i.state AS state
+    FROM
+      order_form AS f,
+      order_info AS i,
+      goods AS g,
+      goods_model AS gm,
+      addr AS a
+    WHERE
+      f.order_id = i.order_id
+      AND f.goods_id = g.goods_id
+      AND f.model = gm.model_code
+      AND f.goods_id = gm.goods_id
+      AND i.addr = a.id AND
+      f.goods_id  IN (
+    SELECT
+    g.goods_id
+    FROM
+    goods as g
+    WHERE
+    g.seller_id = #{sellerId,jdbcType=VARCHAR}
+    ) AND (oi.state =2 or oi.state =3)
+  </select>
+
+  <select id="selectOrderDetail" resultMap="orderResultMap" parameterType="java.lang.String" >
+    select
+      f.order_id AS orderId,
+      f.user_id AS userId,
+      f.goods_id AS goodsId,
+      g.name AS goodsName,
+      f.model AS model,
+      gm.discription AS modelName,
+      f.create_time AS createTime,
+      f.number AS number,
+      i.money AS money,
+      concat(a.province,a.city,a.county,a.detail) AS addr,
+      concat(a.name,a.tel) AS addrName,
+      i.payCode AS paycode,
+      i.state AS state
+    FROM
+      order_form AS f,
+      order_info AS i,
+      goods AS g,
+      goods_model AS gm,
+      addr AS a
+    WHERE
+      f.order_id = i.order_id
+      AND f.goods_id = g.goods_id
+      AND f.model = gm.model_code
+      AND f.goods_id = gm.goods_id
+      AND i.addr = a.id
+    AND f.order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
 </mapper>

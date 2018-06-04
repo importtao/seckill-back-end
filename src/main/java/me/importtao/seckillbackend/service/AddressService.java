@@ -18,9 +18,18 @@ public interface AddressService {
      * @author importtao
      * @date 2018/5/19 20:22
      * @param userId 用户ID
+     * @return   HashMapL
+     */
+    HashMap getAddressListByUserId(String userId);
+
+    /**
+     * description 获取用户收货地址缩写
+     * @author importtao
+     * @date 2018/6/1 10:33
+     * @param userId 用户ID
      * @return   HashMap
      */
-    HashMap getAddressKistByUserId(String userId);
+    HashMap getSimpleAddressListByUserId(String userId);
 
     /**
      * description 添加收货地址

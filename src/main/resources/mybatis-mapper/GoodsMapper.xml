@@ -109,7 +109,7 @@
 
 
   <resultMap id="hotList" type="me.importtao.seckillbackend.viewModel.HotGoods" >
-    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goodsId" property="goodsId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="img" property="img" jdbcType="VARCHAR" />

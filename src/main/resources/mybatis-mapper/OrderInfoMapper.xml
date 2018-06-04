@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.importtao.seckillbackend.model.OrderInfoMapper" >
+<mapper namespace="me.importtao.seckillbackend.dao.OrderInfoMapper" >
   <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.OrderInfo" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="order_id" property="orderId" jdbcType="VARCHAR" />
@@ -113,5 +113,12 @@
       state = #{state,jdbcType=TINYINT},
       reserved_fields = #{reservedFields,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateState">
+    update order_info
+    set
+    state = #{state,jdbcType=TINYINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
 </mapper>

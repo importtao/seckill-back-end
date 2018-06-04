@@ -1,0 +1,27 @@
+@startuml
+/'
+package "Some Group" {
+HTTP - [First Component]
+[Another Component]
+}
+
+package "Other Groups" {
+FTP - [Second Component]
+
+[First Component] --> FTP
+}'/
+
+package "秒杀系统"{
+[service]-->[seckill]
+[seckill]<--[dao]
+[model]-->[seckill]
+[Controller]-->[seckill]
+[util]-->[seckill]
+[mapper]-->[dao]
+/'[seckill]<--[serviceImpl]'/
+[seckill]<--[viewModel]
+[seckill]<--[aspect]
+[serviceImpl]-service
+}
+
+@enduml

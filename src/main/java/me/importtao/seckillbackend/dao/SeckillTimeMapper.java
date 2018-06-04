@@ -2,9 +2,13 @@ package me.importtao.seckillbackend.dao;
 
 import me.importtao.seckillbackend.model.SeckillTime;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+@Component
 public interface SeckillTimeMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -21,4 +25,7 @@ public interface SeckillTimeMapper {
     SeckillTime selectByGoodsId(@Param("goodsId") String goodsId);
 
     Integer selectExitByGoodsId(@Param("goodsId") String goodsId);
+
+    int selectIsSeckillByDate(HashMap map);
+    int selectTest(HashMap map);
 }

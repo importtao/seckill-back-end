@@ -123,4 +123,21 @@
     from goods_model
     where goods_id = #{goodsId,jdbcType=VARCHAR}
   </select>
+
+  <!--查询库存-->
+  <select id="selectInventry"  resultType="java.lang.Integer">
+    select
+      inventry
+    from goods_model
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+    and model_code = #{modelCode,jdbcType=TINYINT}
+  </select>
+  <!--更新库存-->
+  <update id="updateInventry">
+    update goods_model
+    set
+    inventry = #{inventry,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+    and model_code = #{modelCode,jdbcType=TINYINT}
+  </update>
 </mapper>

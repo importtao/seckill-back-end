@@ -73,4 +73,5 @@ file:
   imgPath: E:/test/
   filePath: E:/test/
   logoPath: E:/test/qrLogo.png
+payUrl: http://127.0.0.1/sbe/pay
 

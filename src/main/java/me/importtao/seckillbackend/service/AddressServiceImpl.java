@@ -35,10 +35,10 @@ public class AddressServiceImpl implements AddressService {
      * @date 2018/5/19 20:22
      */
     @Override
-    public HashMap getAddressKistByUserId(String userId) {
+    public HashMap getAddressListByUserId(String userId) {
         HashMap<String,Object> map = new HashMap<>(16);
-        map.put("addList",addrMapper.selectByUserId(userId));
-        map.put("satus","0");
+        map.put("addrList",addrMapper.selectByUserId(userId));
+        map.put("status","0");
         return map;
     }
 
@@ -136,6 +136,22 @@ public class AddressServiceImpl implements AddressService {
             map.put("status","1");
             map.put("msg","删除失败");
         }
+        return map;
+    }
+
+    /**
+     * description 获取用户收货地址缩写
+     *
+     * @param userId 用户ID
+     * @return HashMap
+     * @author importtao
+     * @date 2018/6/1 10:33
+     */
+    @Override
+    public HashMap getSimpleAddressListByUserId(String userId) {
+        HashMap<String,Object> map = new HashMap<>(16);
+        map.put("addrList",addrMapper.selectSimpleAddress(userId));
+        map.put("status","0");
         return map;
     }
 }

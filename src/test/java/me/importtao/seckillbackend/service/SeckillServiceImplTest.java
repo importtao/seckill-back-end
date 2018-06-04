@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
 public class SeckillServiceImplTest {
     @Resource
     private SeckillService seckillService;
+
     @Test
     public void addSeckill() throws Exception {
     }

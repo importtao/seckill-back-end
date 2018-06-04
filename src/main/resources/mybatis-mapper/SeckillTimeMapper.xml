@@ -94,4 +94,23 @@
     where goods_id = #{goodsId,jdbcType=VARCHAR}
     limit 0,1
   </select>
+
+  <select id="selectTest" resultType="java.lang.Integer">
+    select
+    count(*)
+    from seckill_time
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+          and  #{dateTime,jdbcType=TIMESTAMP}> begin_time
+          and end_time > #{dateTime,jdbcType=TIMESTAMP}
+  </select>
+
+  <!--查询当前是否属于秒杀时间-->
+  <select id="selectIsSeckillByDate" resultType="java.lang.Integer" >
+    select
+    count(*)
+    from seckill_time
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+    and  #{dateTime,jdbcType=TIMESTAMP}> begin_time
+    and end_time > #{dateTime,jdbcType=TIMESTAMP}
+  </select>
 </mapper>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.importtao.usersystem.supply.AddrMapper" >
-  <resultMap id="BaseResultMap" type="me.importtao.usersystem.supply.Addr" >
+<mapper namespace="me.importtao.seckillbackend.dao.AddrMapper" >
+  <resultMap id="BaseResultMap" type="me.importtao.seckillbackend.model.Addr" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="province" property="province" jdbcType="VARCHAR" />
@@ -12,6 +12,11 @@
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="simpleAddress" type="me.importtao.seckillbackend.viewModel.SimpleAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="simpleAddress" property="simpleAddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, province, city, county, town, detail, tel, name, version
@@ -26,7 +31,7 @@
     delete from addr
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="me.importtao.usersystem.supply.Addr" >
+  <insert id="insert" parameterType="me.importtao.seckillbackend.model.Addr" >
     insert into addr (id, user_id, province, 
       city, county, town, 
       detail, tel, name, 
@@ -36,7 +41,7 @@
       #{detail,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="me.importtao.usersystem.supply.Addr" >
+  <insert id="insertSelective" parameterType="me.importtao.seckillbackend.model.Addr" >
     insert into addr
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -103,7 +108,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.importtao.usersystem.supply.Addr" >
+  <update id="updateByPrimaryKeySelective" parameterType="me.importtao.seckillbackend.model.Addr" >
     update addr
     <set >
       <if test="userId != null" >
@@ -136,7 +141,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.importtao.usersystem.supply.Addr" >
+  <update id="updateByPrimaryKey" parameterType="me.importtao.seckillbackend.model.Addr" >
     update addr
     set user_id = #{userId,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
@@ -153,6 +158,15 @@
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
+    from addr
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectSimpleAddress" resultMap="simpleAddress" parameterType="java.lang.String" >
+    select
+      id,
+      CONCAT(name,tel,province,city,county,detail) as simpleAddress
     from addr
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
